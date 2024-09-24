@@ -19,7 +19,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users").permitAll() // Permitir acesso sem autenticação
+                        .requestMatchers("/users").permitAll() 
+                        .requestMatchers("/auth/login").permitAll() 
                         .anyRequest().authenticated() // Exigir autenticação para outras requisições
                 );
 

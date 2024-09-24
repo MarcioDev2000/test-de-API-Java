@@ -1,4 +1,5 @@
 package com.uevocola.com.uevocola.services;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,15 @@ public class UserService {
         userModel.setPassword(passwordEncoder.encode(userRecordDto.password())); // Criptografa a senha
         return userRepository.save(userModel);
     }
-    
+
+    public UserModel getUserByEmail(String email) {
+        Optional<UserModel> userOptional = userRepository.findByEmail(email);
+        return userOptional.orElse(null); // Retorna o usuário se encontrado, ou null se não
+    }
+
+    public UserModel findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
 
     public List<UserModel> getAllUsers() {
         return userRepository.findAll();
